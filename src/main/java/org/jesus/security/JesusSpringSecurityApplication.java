@@ -1,4 +1,4 @@
-package org.jesus.security.jesusspringsecurity;
+package org.jesus.security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
