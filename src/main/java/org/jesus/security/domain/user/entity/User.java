@@ -4,8 +4,10 @@ import lombok.*;
 import org.jesus.security.support.AbstractDateAuditingEntity;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +20,7 @@ public class User extends AbstractDateAuditingEntity {
         this.userName = userName;
         this.password = password;
         this.isDeleted = false;
-        this.roles = new LinkedList<>();
+        this.roles = new LinkedHashSet<>();
     }
 
     @Id
@@ -32,17 +34,28 @@ public class User extends AbstractDateAuditingEntity {
     private Boolean isDeleted;
 
     @OneToMany(mappedBy = "user")//cascade를 먹이는게 더 편할 것 같긴한데 JPA를 좀더 공부해야함.
-    private List<Role> roles;
+    private Set<Role> roles;
 
     public void addRoles(Role role) {
         if(this.roles != null && !this.roles.contains(role)){
             this.roles.add(role);
         }
     }
+    public void addRoles(Set<Role> roles) {
+        if(this.roles == null){
+            this.roles = new LinkedHashSet<>();
+        }
+        this.roles.addAll(roles);
+    }
 
     public void removeRoles(Role role){
         if(this.roles != null && this.roles.contains(role)){
             this.roles.remove(role);
         }
+    }
+
+    public void change(String password, Set<Role> roles){
+        this.password = password;
+        this.roles = roles;
     }
 }
