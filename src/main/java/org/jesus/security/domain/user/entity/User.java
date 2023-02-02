@@ -39,12 +39,6 @@ public class User extends AbstractDateAuditingEntity {
             this.roles.add(role);
         }
     }
-    public void addRoles(Set<Role> roles) {
-        if(this.roles == null){
-            this.roles = new LinkedHashSet<>();
-        }
-        this.roles.addAll(roles);
-    }
 
     public void removeRoles(Role role){
         if(this.roles != null && this.roles.contains(role)){

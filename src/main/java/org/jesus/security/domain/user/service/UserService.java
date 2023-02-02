@@ -42,20 +42,28 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    /**
+     * 지금은 권한 수정 시
+     * - 일괄 삭제 -> 추가하고 있는데 이게 최선인가
+     * @param id
+     * @param password
+     * @param roles
+     * @return
+     */
     @Transactional
     public User updateUser(Long id, String password, Set<UserRole> roles){
         var user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException(id+"의 회원을 찾을 수 없습니다."));
 
         //현재 권한 모두 삭제
-        var currentRoles = user.getRoles();
+        var currentRoles = user.getRoles();//lazy쿼리 발생하기 때문에 위에서 fetch로 가져오는건 어떨까
         roleRepository.deleteAll(currentRoles);
 
-        var newRoles = roles.stream().map(v -> Role.builder().user(user).role(v).build()).collect(Collectors.toSet());
-        user.addRoles(newRoles);
-        user.change(password, newRoles);
-
         //신규 권한 추가
+        var newRoles = roles.stream().map(v -> Role.builder().user(user).role(v).build()).collect(Collectors.toSet());
         roleRepository.saveAll(newRoles);
+
+        //사용자 수정 로직
+        user.change(password, newRoles);
         return user;
     }
 
