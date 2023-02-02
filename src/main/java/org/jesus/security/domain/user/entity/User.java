@@ -31,7 +31,7 @@ public class User extends AbstractDateAuditingEntity {
 
     private Boolean isDeleted;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")//cascade를 먹이는게 더 편할 것 같긴한데 JPA를 좀더 공부해야함.
     private List<Role> roles;
 
     public void addRoles(Role role) {
