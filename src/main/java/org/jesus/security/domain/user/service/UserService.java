@@ -67,6 +67,16 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Transactional
+    public User deleteUser(Long id){
+        var user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException(id+"의 회원을 찾을 수 없습니다."));
+        var currentRoles = user.getRoles();
+
+        roleRepository.deleteAll(currentRoles);
+        user.changeIsDeleted(true);
+        return user;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = userRepository.findUserByUserName(username).orElseThrow(() -> new UsernameNotFoundException(username+" 해당 사용자가 존재하지 않습니다."));

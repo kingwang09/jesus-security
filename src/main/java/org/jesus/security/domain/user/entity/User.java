@@ -50,4 +50,8 @@ public class User extends AbstractDateAuditingEntity {
         this.password = password;
         this.roles = roles;
     }
+
+    public void changeIsDeleted(boolean isDeleted){
+        this.isDeleted = isDeleted;
+    }
 }

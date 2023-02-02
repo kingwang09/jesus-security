@@ -59,4 +59,13 @@ public class UserServiceTest {
         Assertions.assertTrue(hasRoles.contains(UserRole.MAKER));
         Assertions.assertTrue(hasRoles.contains(UserRole.ADMIN));
     }
+
+    @Test
+    public void 사용자삭제(){
+        //given & when
+        var deletedUser = userService.deleteUser(user1.getId());
+
+        //then
+        Assertions.assertTrue(deletedUser.getIsDeleted());
+    }
 }
