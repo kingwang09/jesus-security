@@ -53,6 +53,9 @@ public class UserService implements UserDetailsService {
         var newRoles = roles.stream().map(v -> Role.builder().user(user).role(v).build()).collect(Collectors.toSet());
         user.addRoles(newRoles);
         user.change(password, newRoles);
+
+        //신규 권한 추가
+        roleRepository.saveAll(newRoles);
         return user;
     }
 
