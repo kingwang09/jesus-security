@@ -39,4 +39,10 @@ public class User extends AbstractDateAuditingEntity {
             this.roles.add(role);
         }
     }
+
+    public void removeRoles(Role role){
+        if(this.roles != null && this.roles.contains(role)){
+            this.roles.remove(role);
+        }
+    }
 }

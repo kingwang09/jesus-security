@@ -8,6 +8,8 @@ import org.jesus.security.support.AbstractDateAuditingEntity;
 import org.jesus.security.domain.user.constant.UserRole;
 
 import javax.persistence.*;
+import java.util.Objects;
+
 @Getter
 @Builder
 @AllArgsConstructor
@@ -31,5 +33,18 @@ public class Role extends AbstractDateAuditingEntity {
         if(this.user != null){
             this.user.addRoles(this);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return getId().equals(role.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
