@@ -35,16 +35,23 @@ public class Role extends AbstractDateAuditingEntity {
         }
     }
 
+    /**
+     * HashSet 중복 제거를 위해 만들었는데
+     *  - Role을 먼저 검사해야 신규 권한 추가할 때 NPE가 발생하지 않는다.
+     *  - (신규 Role은 Id가 null이기 때문)
+     * @param o
+     * @return
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return getId().equals(role.getId());
+        Role role1 = (Role) o;
+        return  getRole() == role1.getRole() && Objects.equals(getId(), role1.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), getRole());
     }
 }
