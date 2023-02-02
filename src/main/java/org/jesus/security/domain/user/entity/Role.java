@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="user_roles")
+@Table(name="user_roles", uniqueConstraints = @UniqueConstraint(name="user_roles_uk_userid_role", columnNames = {"user_id", "role"}))
 public class Role extends AbstractDateAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
