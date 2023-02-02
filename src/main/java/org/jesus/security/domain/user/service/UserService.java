@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -42,7 +43,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User updateUser(Long id, String password, List<UserRole> roles){
+    public User updateUser(Long id, String password, Set<UserRole> roles){
         var user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException(id+"의 회원을 찾을 수 없습니다."));
 
         //현재 권한 모두 삭제
@@ -51,6 +52,7 @@ public class UserService implements UserDetailsService {
 
         var newRoles = roles.stream().map(v -> Role.builder().user(user).role(v).build()).collect(Collectors.toSet());
         user.addRoles(newRoles);
+        user.change(password, newRoles);
         return user;
     }
 
