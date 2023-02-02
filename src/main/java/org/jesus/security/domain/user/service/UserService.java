@@ -14,6 +14,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -34,6 +38,19 @@ public class UserService implements UserDetailsService {
 
         userRepository.save(user);
         roleRepository.save(userRole);
+        return user;
+    }
+
+    @Transactional
+    public User updateUser(Long id, String password, List<UserRole> roles){
+        var user = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException(id+"의 회원을 찾을 수 없습니다."));
+
+        //현재 권한 모두 삭제
+        var currentRoles = user.getRoles();
+        roleRepository.deleteAll(currentRoles);
+
+        var newRoles = roles.stream().map(v -> Role.builder().user(user).role(v).build()).collect(Collectors.toSet());
+        user.addRoles(newRoles);
         return user;
     }
 
