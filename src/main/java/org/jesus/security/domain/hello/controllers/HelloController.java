@@ -1,4 +1,4 @@
-package org.jesus.security.hello.controllers;
+package org.jesus.security.domain.hello.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

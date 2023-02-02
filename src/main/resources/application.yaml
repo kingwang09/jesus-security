@@ -1,0 +1,25 @@
+server:
+  port: 4444
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
+        format_sql: true
+        hbm2ddl.auto: create
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:jesus-security
+      username: sa
+logging:
+  level:
+    org.jesus.security: DEBUG
+    com.zaxxer.hikari: DEBUG
+    org.springframework: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type: TRACE
