@@ -6,6 +6,9 @@ import org.jesus.security.domain.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -13,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JesusSpringSecurityApplication implements CommandLineRunner {
 
 	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(JesusSpringSecurityApplication.class, args);
@@ -20,7 +24,8 @@ public class JesusSpringSecurityApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var user = userService.createUser("jesus", "inlove");
+		var encryptPassword = passwordEncoder.encode("inlove");
+		var user = userService.createUser("jesus", encryptPassword);
 		log.debug("create first user: {}", user.getUserName());
 
 	}
