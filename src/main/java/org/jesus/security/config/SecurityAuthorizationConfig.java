@@ -20,6 +20,10 @@ public class SecurityAuthorizationConfig extends WebSecurityConfigurerAdapter {
         //http.authorizeRequests().anyRequest().permitAll();//모든 요청 권한 체크 안함
     }
 
+    /**
+     * CustomAuthenticationProvider 지정
+     * @param auth
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider);
