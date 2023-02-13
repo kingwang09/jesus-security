@@ -25,3 +25,4 @@ hs_err_pid*
 .gradle
 build
 application-maria-db.yaml
+application-planet-db.yaml
