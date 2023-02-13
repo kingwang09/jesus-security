@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,11 @@ public class UserServiceTest {
     @BeforeEach
     public void init(){
         //user1 & user1의 권한도 추가
+        user1.addRoles(user1Role);
+
         userRepository.save(user1);
-        roleRepository.save(user1Role);
+        log.debug("save user1 : {}", user1);
+        //roleRepository.save(user1Role);//cascade추가로 인해 user만 저장해도 role까지 저장될 것.
     }
 
     /**
@@ -67,5 +72,12 @@ public class UserServiceTest {
 
         //then
         Assertions.assertTrue(deletedUser.getIsDeleted());
+    }
+
+    @Test
+    public void 사용자조회(){
+        User findUser = userRepository.findUserByUserName(user1.getUserName()).orElseThrow(()->new NoSuchElementException());
+        log.debug("result: userName={}, roles={}", findUser.getUserName(), findUser.getRoles());
+
     }
 }
