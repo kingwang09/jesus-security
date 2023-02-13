@@ -28,11 +28,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         //로그인 시도할 때마다 DB조회 -> redis로 바꾸긴 해야할듯
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);//not-null 보장
-
-//        if(passwordEncoder.matches(passwordEncoder.encode(password), userDetails.getPassword())){
-//
-//        }
-
         if (passwordEncoder.matches(password, userDetails.getPassword())) {//rawPassword를 사용. (encode된 rawPassword가 아님)
             return new UsernamePasswordAuthenticationToken(userName, password, userDetails.getAuthorities());
         } else {
