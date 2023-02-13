@@ -22,7 +22,7 @@ public class Role extends AbstractDateAuditingEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name="user_roles_user_id"))
     private User user;
 
     @Enumerated(EnumType.STRING)
