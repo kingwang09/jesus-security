@@ -24,7 +24,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String userName = authentication.getName();
         String password = authentication.getCredentials().toString();
-        log.debug("try login username={}, credential={}", userName, password);
+        log.info("try login username={}, credential={}", userName, password);
 
         //로그인 시도할 때마다 DB조회 -> redis로 바꾸긴 해야할듯
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);//not-null 보장
