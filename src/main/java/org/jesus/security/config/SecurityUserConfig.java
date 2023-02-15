@@ -16,9 +16,17 @@ public class SecurityUserConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        //PasswordEncoder encoder = new BCryptPasswordEncoder();
-        //PasswordEncoder encoder = new SCryptPasswordEncoder();
         PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         return encoder;
+    }
+
+    @Bean
+    public PasswordEncoder bcryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public PasswordEncoder scryptPasswordEncoder(){
+        return new SCryptPasswordEncoder();
     }
 }
