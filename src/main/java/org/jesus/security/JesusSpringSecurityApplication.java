@@ -26,7 +26,6 @@ public class JesusSpringSecurityApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		var encryptPassword = passwordEncoder.encode("inlove");
 		var user = userService.createUser("jesus", encryptPassword);
-		log.debug("create first user: {}", user.getUserName());
-
+		log.info("create first user: {}", user.getUserName());
 	}
 }
