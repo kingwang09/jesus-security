@@ -7,9 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableJpaRepositories(
-        basePackages = {
-                "org.jesus.security.domain.*.repository"
-        }
+        basePackages = {"org.jesus.security.domain.*.repository"}
 )
 @EnableJpaAuditing
 @EnableTransactionManagement
