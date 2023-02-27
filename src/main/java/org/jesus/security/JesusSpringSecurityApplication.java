@@ -2,6 +2,7 @@ package org.jesus.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jesus.security.domain.user.constant.UserRole;
 import org.jesus.security.domain.user.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +26,7 @@ public class JesusSpringSecurityApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var encryptPassword = passwordEncoder.encode("inlove");
-		var user = userService.createUser("jesus", encryptPassword);
+		var user = userService.createUser("jesus", encryptPassword, UserRole.ADMIN);
 		log.info("create first user: {}", user.getUserName());
 	}
 }

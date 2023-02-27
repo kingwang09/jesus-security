@@ -26,13 +26,13 @@ public class UserService implements UserDetailsService {
     private final RoleRepository roleRepository;
 
     @Transactional
-    public User createUser(String userName, String password){
+    public User createUser(String userName, String password, UserRole role){
         var user = User.builder()
                 .userName(userName)
                 .password(password)
                 .build();
         var userRole = Role.builder()
-                .role(UserRole.USER)
+                .role(role)
                 .build();
         userRole.setUser(user);
 
